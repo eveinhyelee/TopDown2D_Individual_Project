@@ -23,22 +23,22 @@ public class StartUISet : MonoBehaviour
     {
         MainPanel.SetActive(true);
         SelectCharPanelBtn = GetComponent<Button>();
-        NameInput.onEndEdit.AddListener(delegate { CreateID(NameInput); });
+        NameInput.onEndEdit.AddListener(delegate { CreateID(); });
     }
     
     void Update()
     {
         
     }
-    public void CreateID(TMP_InputField input)
+    public void CreateID()
     {
-        if (input.text.Length < 2 || input.text.Length > 10)
-        {            
-            input.text = string.Empty;
+        if (NameInput.text.Length < 2 || NameInput.text.Length > 10)
+        {
+            NameInput.text = string.Empty;
             return;
         }
 
-        PlayerPrefs.SetString("userName", input.text);
+        PlayerPrefs.SetString("userName", NameInput.text);
         PlayerPrefs.Save();
     }
     public void OnSelectCharPanel() 
