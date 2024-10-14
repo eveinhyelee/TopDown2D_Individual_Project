@@ -14,7 +14,6 @@ public class PlayMainUI : MonoBehaviour
     [Header("플레이어 이름")]
     [SerializeField] private TMP_Text uesrNameText;
     [SerializeField] private GameObject UesrName;
-    private string userName;
 
     [SerializeField] private GameObject NameChangePanel;
     [SerializeField] private TMP_InputField changeNameInput;
@@ -35,27 +34,31 @@ public class PlayMainUI : MonoBehaviour
 
     void Start()
     {
-        userName = PlayerPrefs.GetString("userName");
-        uesrNameText.text = userName;
+        uesrNameText.text = PlayerPrefs.GetString("userName");
     }
-    
+
+    private void Update()
+    {
+        
+    }
+
     public void ChangeID()
     {
         if (PlayerPrefs.HasKey("userName"))
         {
             PlayerPrefs.DeleteKey("userName");
+            changeNameInput.onEndEdit.AddListener(delegate { ChangeIDSet(); });
         }
-        changeNameInput.onEndEdit.AddListener(delegate { ChangeIDSet(changeNameInput); });
     }
 
-    public void ChangeIDSet(TMP_InputField input)
-    {   
-        if (input.text.Length < 2 || input.text.Length > 10)
+    public void ChangeIDSet()
+    {
+        if (changeNameInput.text.Length < 2 || changeNameInput.text.Length > 10)
         {
-            input.text = string.Empty;
+            changeNameInput.text = string.Empty;
             return;
         }
-        PlayerPrefs.SetString("userName", input.text);
+        PlayerPrefs.SetString("userName", changeNameInput.text);
         PlayerPrefs.Save();
     }
     public void OnNameChangePanel()
@@ -67,6 +70,7 @@ public class PlayMainUI : MonoBehaviour
     {
         NameChangePanel.SetActive(false);
         UesrName.SetActive(true);
+        uesrNameText.text = changeNameInput.text;
     }
 }
 

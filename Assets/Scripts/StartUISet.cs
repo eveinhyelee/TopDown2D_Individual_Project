@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Windows;
 
-public class StatUISet : MonoBehaviour
+public class StartUISet : MonoBehaviour
 {    
     [SerializeField] private TMP_InputField NameInput;
 
